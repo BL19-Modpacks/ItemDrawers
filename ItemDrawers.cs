@@ -130,7 +130,10 @@ namespace kg_ItemDrawers
             [UsedImplicitly]
             private static void Postfix(AudioMan __instance)
             {
-                AudioMixerGroup SFXgroup = __instance.m_masterMixer.FindMatchingGroups("SFX")[0];
+                var sfxGroups = __instance.m_masterMixer.FindMatchingGroups("SFX");
+                if (sfxGroups.Length == 0) return;
+                
+                AudioMixerGroup SFXgroup = sfxGroups[0];
                 foreach (GameObject go in asset.LoadAllAssets<GameObject>())
                 {
                     foreach (AudioSource audioSource in go.GetComponentsInChildren<AudioSource>(true))
